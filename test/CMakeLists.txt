@@ -1,8 +1,11 @@
-set(Test_Sources
-        "src/main.cpp")
+ find_package(Catch2 CONFIG REQUIRED)
 
-add_executable(Test ${Test_Sources})
+ set(Test_Sources
+         "src/main.cpp")
 
-target_link_libraries(Test
-        PUBLIC
-        PathTracing)
+ add_executable(Test ${Test_Sources})
+
+ target_link_libraries(Test
+         PUBLIC
+         Catch2::Catch2
+         PathTracing)
