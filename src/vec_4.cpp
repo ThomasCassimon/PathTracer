@@ -35,6 +35,37 @@ namespace raytracer
 	{
 		return _mm_sub_ps(lhs, rhs);
 	}
+	norm4_type<architecture::x86_64>::norm4_t
+	vec4_type<architecture::x86_64>::normalize(const vec4_type<architecture::x86_64>::vec4_t& vec) noexcept
+	{
+		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec, vec);
+
+		/*
+		// Version 1 (2x hadd; Latency: 40 Cycles)
+
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_hadd_ps(vec, vec);
+		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_hadd_ps(acc1, acc1);
+		 */
+		/*
+		// Version 2 (1x shuffle, 1x hadd; 1x add, Latency: 39 cycles)
+
+		const vec4_type<architecture::x86_64>::vec4_t perm = _mm_permute_ps (vec, 0xB1u);
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(vec, perm);
+		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_hadd_ps(acc1, acc1);
+		 */
+		// Version 3 (3x shuffle, 3x add, Latency: 39 cycles)
+
+		const vec4_type<architecture::x86_64>::vec4_t perm0 = _mm_permute_ps(vec, 0x6Cu);
+		const vec4_type<architecture::x86_64>::vec4_t perm1 = _mm_permute_ps(vec, 0xB1u);
+		const vec4_type<architecture::x86_64>::vec4_t perm2 = _mm_permute_ps(vec, 0xC6u);
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(vec, perm0);
+		const vec4_type<architecture::x86_64>::vec4_t acc2 = _mm_add_ps(perm1, perm2);
+		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_add_ps(acc1, acc2);
+
+		const vec4_type<architecture::x86_64>::vec4_t sqrt = _mm_sqrt_ps(sum);
+
+		return _mm_div_ps(vec, sqrt);
+	}
 
 	template <architecture Architecture>
 	std::ostream& operator<<(std::ostream& stream, const typename vec4_type<Architecture>::vec4_t& vec)

@@ -8,6 +8,7 @@
 #include <iosfwd>
 
 #include "architecture.hpp"
+#include "norm_4.hpp"
 
 #if defined(__aarch64__)
 	#error "Not Implemented"
@@ -36,6 +37,8 @@ namespace raytracer
 		[[nodiscard]] static vec4_t add(const vec4_t& lhs, const vec4_t& rhs) noexcept;
 
 		[[nodiscard]] static vec4_t subtract(const vec4_t& lhs, const vec4_t& rhs) noexcept;
+
+		[[nodiscard]] static norm4_type<architecture::x86_64>::norm4_t normalize(const vec4_t& vec) noexcept;
 	};
 
 	template <architecture Architecture = architecture::Native>

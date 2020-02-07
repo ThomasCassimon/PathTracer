@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(RayTracer_Sources
         "src/architecture.cpp"
         "src/layout.cpp"
+        "src/norm_4.cpp"
         "src/vec_4.cpp"
         "src/vector_buffer.cpp")
 
