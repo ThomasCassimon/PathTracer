@@ -26,6 +26,8 @@ namespace raytracer
 	template <architecture Architecture>
 	struct vector_buffer<soa_layout, Architecture>
 	{
+		private:
+		public:
 		std::vector<typename vec4_type<Architecture>::vec4_t> x;
 		std::vector<typename vec4_type<Architecture>::vec4_t> y;
 		std::vector<typename vec4_type<Architecture>::vec4_t> z;

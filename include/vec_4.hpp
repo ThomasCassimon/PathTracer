@@ -19,7 +19,7 @@
 
 namespace raytracer
 {
-	template <architecture Architecture>
+	template <architecture Architecture = architecture::Native>
 	struct vec4_type
 	{
 	};
@@ -36,7 +36,7 @@ namespace raytracer
 		store(const vec4_t& vec) noexcept;
 	};
 
-	template <architecture Architecture>
+	template <architecture Architecture = architecture::Native>
 	std::ostream&
 	operator<<(std::ostream& stream,
 			   const typename vec4_type<Architecture>::vec4_t& vec);

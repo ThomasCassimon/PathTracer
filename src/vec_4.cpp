@@ -13,7 +13,7 @@ namespace raytracer
 	vec4_type<architecture::x86_64>::load(float x, float y, float z,
 										  float w) noexcept
 	{
-		return _mm_set_ps(z, y, x, w);
+		return _mm_set_ps(w, z, y, x);
 	}
 
 	std::array<float, 4> vec4_type<architecture::x86_64>::store(
@@ -39,4 +39,8 @@ namespace raytracer
 		stream << buffer;
 		return stream;
 	}
+
+	template std::ostream&
+	operator<<(std::ostream& stream,
+			   const typename vec4_type<architecture::Native>::vec4_t& vec);
 }

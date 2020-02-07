@@ -5,12 +5,14 @@ Language:        Cpp
 
 ColumnLimit:     80
 
+AccessModifierOffset: 0
 FixNamespaceComments: false
-NamespaceIndentation : All
+NamespaceIndentation: All
 
 IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
 
+AlignAfterOpenBracket: Align
 AlignConsecutiveMacros: true
 PointerAlignment: Left
 
