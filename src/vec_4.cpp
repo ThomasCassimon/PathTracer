@@ -9,36 +9,34 @@
 
 namespace raytracer
 {
-	vec4_type<architecture::x86_64>::vec4_t vec4_type<architecture::x86_64>::load(float x, float y, float z,
-																				  float w) noexcept
+	vec4_type<architecture::x86_64> vec4_type<architecture::x86_64>::load(float x, float y, float z, float w) noexcept
 	{
-		return _mm_set_ps(w, z, y, x);
+		return vec4_type<architecture::x86_64>{_mm_set_ps(w, z, y, x)};
 	}
 
-	std::array<float, 4>
-	vec4_type<architecture::x86_64>::store(const vec4_type<architecture::x86_64>::vec4_t& vec) noexcept
+	std::array<float, 4> vec4_type<architecture::x86_64>::store(const vec4_type<architecture::x86_64>& vec) noexcept
 	{
 		std::array<float, 4> data = {{0.0}};
-		_mm_store_ps(data.data(), vec);
+		_mm_store_ps(data.data(), vec._);
 		return data;
 	}
 
-	vec4_type<architecture::x86_64>::vec4_t
-	vec4_type<architecture::x86_64>::add(const vec4_type<architecture::x86_64>::vec4_t& lhs,
-										 const vec4_type<architecture::x86_64>::vec4_t& rhs) noexcept
+	vec4_type<architecture::x86_64>
+	vec4_type<architecture::x86_64>::add(const vec4_type<architecture::x86_64>& lhs,
+										 const vec4_type<architecture::x86_64>& rhs) noexcept
 	{
-		return _mm_add_ps(lhs, rhs);
+		return vec4_type<architecture::x86_64>{_mm_add_ps(lhs._, rhs._)};
 	}
-	vec4_type<architecture::x86_64>::vec4_t
-	vec4_type<architecture::x86_64>::subtract(const vec4_type<architecture::x86_64>::vec4_t& lhs,
-											  const vec4_type<architecture::x86_64>::vec4_t& rhs) noexcept
+	vec4_type<architecture::x86_64>
+	vec4_type<architecture::x86_64>::subtract(const vec4_type<architecture::x86_64>& lhs,
+											  const vec4_type<architecture::x86_64>& rhs) noexcept
 	{
-		return _mm_sub_ps(lhs, rhs);
+		return vec4_type<architecture::x86_64>{_mm_sub_ps(lhs._, rhs._)};
 	}
-	norm4_type<architecture::x86_64>::norm4_t
-	vec4_type<architecture::x86_64>::normalize(const vec4_type<architecture::x86_64>::vec4_t& vec) noexcept
+	norm4_type<architecture::x86_64>
+	vec4_type<architecture::x86_64>::normalize(const vec4_type<architecture::x86_64>& vec) noexcept
 	{
-		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec, vec);
+		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec._, vec._);
 
 		// Version 1 (2x hadd; Latency: 40 Cycles)
 		// Fastest version according to profiling data
@@ -64,11 +62,11 @@ namespace raytracer
 
 		const vec4_type<architecture::x86_64>::vec4_t sqrt = _mm_sqrt_ps(sum);
 
-		return _mm_div_ps(vec, sqrt);
+		return norm4_type<architecture::x86_64>{_mm_div_ps(vec._, sqrt)};
 	}
 
 	template <architecture Architecture>
-	std::ostream& operator<<(std::ostream& stream, const typename vec4_type<Architecture>::vec4_t& vec)
+	std::ostream& operator<<(std::ostream& stream, const vec4_type<Architecture>& vec)
 	{
 		const std::array<float, 4> array = vec4_type<Architecture>::store(vec);
 
@@ -80,6 +78,5 @@ namespace raytracer
 		return stream;
 	}
 
-	template std::ostream& operator<<(std::ostream& stream,
-									  const typename vec4_type<architecture::Native>::vec4_t& vec);
+	template std::ostream& operator<<(std::ostream& stream, const vec4_type<architecture::Native>& vec);
 }

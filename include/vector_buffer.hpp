@@ -11,25 +11,25 @@
 
 namespace raytracer
 {
-	template <typename LayoutTag>
+	template <typename VectorType, typename LayoutTag>
 	struct vector_buffer
 	{
 	};
 
-	template <>
-	struct vector_buffer<aos_layout>
+	template <typename VectorType>
+	struct vector_buffer<VectorType, aos_layout>
 	{
-		std::vector<typename vec4_type<architecture::Native>::vec4_t> data;
+		std::vector<VectorType> data;
 	};
 
-	template <>
-	struct vector_buffer<soa_layout>
+	template <typename VectorType>
+	struct vector_buffer<VectorType, soa_layout>
 	{
 		private:
 		public:
-		std::vector<typename vec4_type<architecture::Native>::vec4_t> x;
-		std::vector<typename vec4_type<architecture::Native>::vec4_t> y;
-		std::vector<typename vec4_type<architecture::Native>::vec4_t> z;
-		std::vector<typename vec4_type<architecture::Native>::vec4_t> w;
+		std::vector<VectorType> x;
+		std::vector<VectorType> y;
+		std::vector<VectorType> z;
+		std::vector<VectorType> w;
 	};
 }
