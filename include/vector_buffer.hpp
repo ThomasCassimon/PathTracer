@@ -25,8 +25,6 @@ namespace raytracer
 	template <typename VectorType>
 	struct vector_buffer<VectorType, soa_layout>
 	{
-		private:
-		public:
 		std::vector<VectorType> x;
 		std::vector<VectorType> y;
 		std::vector<VectorType> z;
