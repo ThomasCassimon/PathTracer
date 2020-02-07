@@ -40,27 +40,27 @@ namespace raytracer
 	{
 		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec, vec);
 
-		/*
 		// Version 1 (2x hadd; Latency: 40 Cycles)
-
-		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_hadd_ps(vec, vec);
+		// Fastest version according to profiling data
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_hadd_ps(squared, squared);
 		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_hadd_ps(acc1, acc1);
-		 */
-		/*
+
 		// Version 2 (1x shuffle, 1x hadd; 1x add, Latency: 39 cycles)
-
-		const vec4_type<architecture::x86_64>::vec4_t perm = _mm_permute_ps (vec, 0xB1u);
-		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(vec, perm);
+		/*
+		const vec4_type<architecture::x86_64>::vec4_t perm = _mm_permute_ps (squared, _MM_PERM_BADC);
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(squared, perm);
 		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_hadd_ps(acc1, acc1);
 		 */
-		// Version 3 (3x shuffle, 3x add, Latency: 39 cycles)
 
-		const vec4_type<architecture::x86_64>::vec4_t perm0 = _mm_permute_ps(vec, 0x6Cu);
-		const vec4_type<architecture::x86_64>::vec4_t perm1 = _mm_permute_ps(vec, 0xB1u);
-		const vec4_type<architecture::x86_64>::vec4_t perm2 = _mm_permute_ps(vec, 0xC6u);
-		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(vec, perm0);
+		// Version 3 (3x shuffle, 3x add, Latency: 39 cycles)
+		/*
+		const vec4_type<architecture::x86_64>::vec4_t perm0 = _mm_permute_ps(squared, _MM_PERM_CBAD);
+		const vec4_type<architecture::x86_64>::vec4_t perm1 = _mm_permute_ps(squared, _MM_PERM_BADC);
+		const vec4_type<architecture::x86_64>::vec4_t perm2 = _mm_permute_ps(squared, _MM_PERM_ADCB);
+		const vec4_type<architecture::x86_64>::vec4_t acc1 = _mm_add_ps(squared, perm0);
 		const vec4_type<architecture::x86_64>::vec4_t acc2 = _mm_add_ps(perm1, perm2);
 		const vec4_type<architecture::x86_64>::vec4_t sum = _mm_add_ps(acc1, acc2);
+		 */
 
 		const vec4_type<architecture::x86_64>::vec4_t sqrt = _mm_sqrt_ps(sum);
 

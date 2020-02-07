@@ -17,15 +17,18 @@ target_include_directories(RayTracer
             include/)
 
 target_compile_options(RayTracer
+        PUBLIC
+        -mavx2
+
         PRIVATE
-            -fPIC
+        -fPIC
 
-            -Wall
-            -Wextra
-            -Wpedantic
+        -Wall
+        -Wextra
+        -Wpedantic
 
-            -Werror-switch
-            -Werror-return-type
+        -Werror-switch
+        -Werror-return-type
             -Werror-shadow)
 
 add_executable(PathTracer "main.cpp")
