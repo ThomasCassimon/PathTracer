@@ -29,15 +29,15 @@ namespace raytracer
 	{
 		using vec4_t = __m128;
 
-		[[nodiscard]] static vec4_t load(float x, float y, float z,
-										 float w) noexcept;
+		[[nodiscard]] static vec4_t load(float x, float y, float z, float w) noexcept;
 
-		[[nodiscard]] static std::array<float, 4>
-		store(const vec4_t& vec) noexcept;
+		[[nodiscard]] static std::array<float, 4> store(const vec4_t& vec) noexcept;
+
+		[[nodiscard]] static vec4_t add(const vec4_t& lhs, const vec4_t& rhs) noexcept;
+
+		[[nodiscard]] static vec4_t subtract(const vec4_t& lhs, const vec4_t& rhs) noexcept;
 	};
 
 	template <architecture Architecture = architecture::Native>
-	std::ostream&
-	operator<<(std::ostream& stream,
-			   const typename vec4_type<Architecture>::vec4_t& vec);
+	std::ostream& operator<<(std::ostream& stream, const typename vec4_type<Architecture>::vec4_t& vec);
 }

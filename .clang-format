@@ -3,7 +3,7 @@
 Language:        Cpp
 # BasedOnStyle:  LLVM
 
-ColumnLimit:     80
+ColumnLimit:     120
 
 AccessModifierOffset: 0
 FixNamespaceComments: false
