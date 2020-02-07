@@ -30,17 +30,19 @@ namespace raytracer
 	template <>
 	struct norm4_type<architecture::x86_64>
 	{
-		private:
 		using norm4_t = __m128;
 
 		norm4_t _;
 
-		public:
-		explicit norm4_type(const norm4_t norm) : _(norm) {}
+		norm4_type() noexcept;
 
-		[[nodiscard]] static norm4_type<architecture::x86_64> load(float x, float y, float z, float w) noexcept;
+		explicit norm4_type(const norm4_t norm) noexcept;
+
+		[[nodiscard]] explicit operator vec4_type<architecture::x86_64>() const noexcept;
 	};
 
+	[[nodiscard]] norm4_type<architecture::x86_64> loadn(float x, float y, float z, float w) noexcept;
+
 	template <architecture Architecture = architecture::Native>
-	std::ostream& operator<<(std::ostream& stream, const norm4_type<Architecture>& vec);
+	std::ostream& operator<<(std::ostream& stream, const norm4_type<Architecture>& norm);
 }

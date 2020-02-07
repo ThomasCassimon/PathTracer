@@ -29,27 +29,26 @@ namespace raytracer
 	template <>
 	struct vec4_type<architecture::x86_64>
 	{
-		private:
 		using vec4_t = __m128;
 
 		vec4_t _;
 
-		public:
+		vec4_type() noexcept;
+
 		explicit vec4_type(const vec4_t vec) : _(vec) {}
-
-		[[nodiscard]] static vec4_type<architecture::x86_64> load(float x, float y, float z, float w) noexcept;
-
-		[[nodiscard]] static std::array<float, 4> store(const vec4_type<architecture::x86_64>& vec) noexcept;
-
-		[[nodiscard]] static vec4_type<architecture::x86_64> add(const vec4_type<architecture::x86_64>& lhs,
-																 const vec4_type<architecture::x86_64>& rhs) noexcept;
-
-		[[nodiscard]] static vec4_type<architecture::x86_64>
-		subtract(const vec4_type<architecture::x86_64>& lhs, const vec4_type<architecture::x86_64>& rhs) noexcept;
-
-		[[nodiscard]] static norm4_type<architecture::x86_64>
-		normalize(const vec4_type<architecture::x86_64>& vec) noexcept;
 	};
+
+	[[nodiscard]] vec4_type<architecture::x86_64> loadv(float x, float y, float z, float w) noexcept;
+
+	[[nodiscard]] std::array<float, 4> store(const vec4_type<architecture::x86_64>& vec) noexcept;
+
+	[[nodiscard]] vec4_type<architecture::x86_64> add(const vec4_type<architecture::x86_64>& lhs,
+													  const vec4_type<architecture::x86_64>& rhs) noexcept;
+
+	[[nodiscard]] vec4_type<architecture::x86_64> subtract(const vec4_type<architecture::x86_64>& lhs,
+														   const vec4_type<architecture::x86_64>& rhs) noexcept;
+
+	[[nodiscard]] norm4_type<architecture::x86_64> normalize(const vec4_type<architecture::x86_64>& vec) noexcept;
 
 	template <architecture Architecture = architecture::Native>
 	std::ostream& operator<<(std::ostream& stream, const vec4_type<Architecture>& vec);

@@ -16,16 +16,16 @@ void performance()
 
 	vector_buffer<vec4_type<>, aos_layout> buffer;
 
-	buffer.data.push_back(vec4_type<>::load(1.0, 2.0, 3.0, 4.0));
+	buffer.data.push_back(loadv(1.0, 2.0, 3.0, 4.0));
 
-	std::cout << vec4_type<>::normalize(buffer.data.front()) << '\n';
+	std::cout << normalize(buffer.data.front()) << '\n';
 
 	std::random_device dev;
 	std::uniform_real_distribution<float> dist;
 
 	for (unsigned int i = 0; i < (SIZE - 1); ++i)
 	{
-		buffer.data.push_back(vec4_type<>::load(dist(dev), dist(dev), dist(dev), dist(dev)));
+		buffer.data.push_back(loadv(dist(dev), dist(dev), dist(dev), dist(dev)));
 	}
 
 	vector_buffer<norm4_type<>, aos_layout> resultBuffer;
@@ -37,7 +37,7 @@ void performance()
 
 	for (; i < size; ++i)
 	{
-		resultBuffer.data[i] = vec4_type<>::normalize(buffer.data[i]);
+		resultBuffer.data[i] = normalize(buffer.data[i]);
 	}
 
 	auto end = std::chrono::high_resolution_clock::now();
@@ -55,10 +55,10 @@ int main()
 	const unsigned short IMAGE_WIDTH = 640;
 	const unsigned short IMAGE_HEIGHT = 480;
 
-	const vec4_type<> camera = vec4_type<>::load(0.0f, 1.0f, 1.0f, 0.0f);
-	const norm4_type<> normDir = vec4_type<>::normalize(vec4_type<>::load(0.0f, 1.0f, -1.0f, 0.0f));
+	const vec4_type<> camera = loadv(0.0f, 1.0f, 1.0f, 0.0f);
+	const norm4_type<> normDir = normalize(loadv(0.0f, 1.0f, -1.0f, 0.0f));
 
-	const vec4_type<> screenPos = vec4_type<>::add(camera, normDir);
+	const vec4_type<> screenPos = add(camera, static_cast<vec4_type<>>(normDir));
 
 	for (unsigned short i = 0; i < IMAGE_HEIGHT; ++i)
 	{

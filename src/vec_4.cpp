@@ -9,32 +9,31 @@
 
 namespace raytracer
 {
-	vec4_type<architecture::x86_64> vec4_type<architecture::x86_64>::load(float x, float y, float z, float w) noexcept
+	vec4_type<architecture::x86_64>::vec4_type() noexcept : _(_mm_set1_ps(0.0)) {}
+
+	vec4_type<architecture::x86_64> loadv(float x, float y, float z, float w) noexcept
 	{
 		return vec4_type<architecture::x86_64>{_mm_set_ps(w, z, y, x)};
 	}
 
-	std::array<float, 4> vec4_type<architecture::x86_64>::store(const vec4_type<architecture::x86_64>& vec) noexcept
+	std::array<float, 4> store(const vec4_type<architecture::x86_64>& vec) noexcept
 	{
 		std::array<float, 4> data = {{0.0}};
 		_mm_store_ps(data.data(), vec._);
 		return data;
 	}
 
-	vec4_type<architecture::x86_64>
-	vec4_type<architecture::x86_64>::add(const vec4_type<architecture::x86_64>& lhs,
-										 const vec4_type<architecture::x86_64>& rhs) noexcept
+	vec4_type<architecture::x86_64> add(const vec4_type<architecture::x86_64>& lhs,
+										const vec4_type<architecture::x86_64>& rhs) noexcept
 	{
 		return vec4_type<architecture::x86_64>{_mm_add_ps(lhs._, rhs._)};
 	}
-	vec4_type<architecture::x86_64>
-	vec4_type<architecture::x86_64>::subtract(const vec4_type<architecture::x86_64>& lhs,
-											  const vec4_type<architecture::x86_64>& rhs) noexcept
+	vec4_type<architecture::x86_64> subtract(const vec4_type<architecture::x86_64>& lhs,
+											 const vec4_type<architecture::x86_64>& rhs) noexcept
 	{
 		return vec4_type<architecture::x86_64>{_mm_sub_ps(lhs._, rhs._)};
 	}
-	norm4_type<architecture::x86_64>
-	vec4_type<architecture::x86_64>::normalize(const vec4_type<architecture::x86_64>& vec) noexcept
+	norm4_type<architecture::x86_64> normalize(const vec4_type<architecture::x86_64>& vec) noexcept
 	{
 		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec._, vec._);
 
@@ -68,7 +67,7 @@ namespace raytracer
 	template <architecture Architecture>
 	std::ostream& operator<<(std::ostream& stream, const vec4_type<Architecture>& vec)
 	{
-		const std::array<float, 4> array = vec4_type<Architecture>::store(vec);
+		const std::array<float, 4> array = store(vec);
 
 		char buffer[64];
 

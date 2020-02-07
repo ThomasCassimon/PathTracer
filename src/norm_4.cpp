@@ -8,15 +8,26 @@
 
 namespace raytracer
 {
-	norm4_type<architecture::x86_64> norm4_type<architecture::x86_64>::load(float x, float y, float z, float w) noexcept
+	norm4_type<architecture::x86_64>::norm4_type() noexcept : _(_mm_set_ps(0.0, 0.0, 0.0, 1.0)) {}
+
+	norm4_type<architecture::x86_64>::norm4_type(const norm4_t norm) noexcept : _(norm) {}
+
+	norm4_type<architecture::x86_64>::operator vec4_type<architecture::x86_64>() const noexcept
 	{
-		return vec4_type<architecture::x86_64>::normalize(vec4_type<architecture::x86_64>::load(x, y, z, w));
+		return vec4_type<architecture::x86_64>{this->_};
+	}
+
+	norm4_type<architecture::x86_64> loadn(float x, float y, float z, float w) noexcept
+	{
+		return normalize(loadv(x, y, z, w));
 	}
 
 	template <architecture Architecture>
-	std::ostream& operator<<(std::ostream& stream, const norm4_type<Architecture>& vec)
+	std::ostream& operator<<(std::ostream& stream, const norm4_type<Architecture>& norm)
 	{
-		stream << vec4_type{vec._};
+		stream << static_cast<vec4_type<>>(norm);
 		return stream;
 	}
+
+	template std::ostream& operator<<(std::ostream& stream, const norm4_type<architecture::Native>& norm);
 }
