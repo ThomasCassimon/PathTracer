@@ -1,0 +1,43 @@
+# ClangFormatConfigureSource: 'LLVM'
+---
+Language:        Cpp
+# BasedOnStyle:  LLVM
+
+ColumnLimit:     80
+
+FixNamespaceComments: false
+NamespaceIndentation : All
+
+IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
+
+AlignConsecutiveMacros: true
+PointerAlignment: Left
+
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeBraces: Allman
+
+BraceWrapping:
+    AfterCaseLabel:  true
+    AfterClass:      true
+    AfterControlStatement: true
+    AfterEnum:       true
+    AfterFunction:   true
+    AfterNamespace:  true
+    AfterObjCDeclaration: true
+    AfterStruct:     true
+    AfterUnion:      true
+    AfterExternBlock: true
+    BeforeCatch:     true
+    BeforeElse:      true
+    IndentBraces:    true
+    SplitEmptyFunction: true
+    SplitEmptyRecord: false
+    SplitEmptyNamespace: true
+
+SortIncludes:    true
+
+Standard:        Cpp11
+IndentWidth:     4
+TabWidth:        4
+UseTab:          Always
