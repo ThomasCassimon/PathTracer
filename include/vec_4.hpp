@@ -23,7 +23,6 @@ namespace raytracer
 	template <architecture Architecture = architecture::Native>
 	struct vec4_type
 	{
-		friend class norm4_type<Architecture>;
 	};
 
 	template <>
