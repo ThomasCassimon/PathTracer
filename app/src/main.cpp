@@ -19,6 +19,8 @@ int main()
 	const norm3_type<> normDir = normalize(loadv(0.0f, -1.0f, -1.0f));
 	const norm3_type<> up = normalize(loadv(0.0f, 1.0f, -1.0f));
 
+	std::cout << up << '\n';
+
 	const vec3_type<> screenPos = add(camera, static_cast<vec3_type<>>(normDir));
 
 	for (unsigned short i = 0; i < IMAGE_HEIGHT; ++i)

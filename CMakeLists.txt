@@ -39,9 +39,5 @@ target_compile_options(PathTracing
         -Werror-return-type
         -Werror-shadow)
 
-target_link_libraries(PathTracing
-		PRIVATE
-			Stb)
-
 add_subdirectory(app)
 add_subdirectory(test)

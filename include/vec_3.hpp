@@ -15,7 +15,9 @@
 #elif defined(__arm__)
 	#error "Not Implemented"
 #elif defined(__amd64__)
+
 	#include "x86intrin.h"
+
 #endif
 
 namespace raytracer
@@ -40,6 +42,11 @@ namespace raytracer
 	[[nodiscard]] vec3_type<architecture::x86_64> loadv(float x, float y, float z) noexcept;
 
 	[[nodiscard]] std::array<float, 3> store(const vec3_type<architecture::x86_64>& vec) noexcept;
+
+	[[nodiscard]] float dot(const vec3_type<architecture::x86_64>& lhs,
+							const vec3_type<architecture::x86_64>& rhs) noexcept;
+
+	[[nodiscard]] float length(const vec3_type<architecture::x86_64>& vec) noexcept;
 
 	[[nodiscard]] vec3_type<architecture::x86_64> add(const vec3_type<architecture::x86_64>& lhs,
 													  const vec3_type<architecture::x86_64>& rhs) noexcept;
