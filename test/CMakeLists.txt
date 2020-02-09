@@ -1,7 +1,8 @@
  find_package(Catch2 CONFIG REQUIRED)
 
  set(Test_Sources
-         "src/main.cpp")
+         "src/main.cpp"
+         "src/vec_4.cpp")
 
  add_executable(Test ${Test_Sources})
 
