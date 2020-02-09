@@ -34,7 +34,7 @@ namespace raytracer
 
 		vec3_type() noexcept;
 
-		explicit vec3_type(const vec3_t vec) : _(vec) {}
+		explicit vec3_type(const vec3_t vec) noexcept;
 	};
 
 	[[nodiscard]] vec3_type<architecture::x86_64> loadv(float x, float y, float z) noexcept;

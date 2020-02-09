@@ -9,7 +9,11 @@
 
 namespace raytracer
 {
-	vec4_type<architecture::x86_64>::vec4_type() noexcept : _(_mm_set1_ps(0.0)) {}
+	vec4_type<architecture::x86_64>::vec4_type() noexcept : _(_mm_set1_ps(0.0))
+	{}
+
+	vec4_type<architecture::x86_64>::vec4_type(const vec4_t vec) noexcept: _(vec)
+	{}
 
 	vec4_type<architecture::x86_64> loadv(float x, float y, float z, float w) noexcept
 	{
@@ -28,11 +32,13 @@ namespace raytracer
 	{
 		return vec4_type<architecture::x86_64>{_mm_add_ps(lhs._, rhs._)};
 	}
+
 	vec4_type<architecture::x86_64> subtract(const vec4_type<architecture::x86_64>& lhs,
 											 const vec4_type<architecture::x86_64>& rhs) noexcept
 	{
 		return vec4_type<architecture::x86_64>{_mm_sub_ps(lhs._, rhs._)};
 	}
+
 	norm4_type<architecture::x86_64> normalize(const vec4_type<architecture::x86_64>& vec) noexcept
 	{
 		const vec4_type<architecture::x86_64>::vec4_t squared = _mm_mul_ps(vec._, vec._);
@@ -64,7 +70,7 @@ namespace raytracer
 		return norm4_type<architecture::x86_64>{_mm_div_ps(vec._, sqrt)};
 	}
 
-	template <architecture Architecture>
+	template<architecture Architecture>
 	std::ostream& operator<<(std::ostream& stream, const vec4_type<Architecture>& vec)
 	{
 		const std::array<float, 4> array = store(vec);
